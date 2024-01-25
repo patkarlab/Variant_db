@@ -44,7 +44,7 @@ def append_to_database(vcf_files):
         num_samples = len(sample_id.split(','))  # Calculate num_samples for each variant
         frequency = alt_num / (2 * num_samples)
 
-        print(f"Chrom: {chrom}, Pos: {pos}, Ref: {ref}, Alt: {alt}, Alt Num: {alt_num}, Number of Samples: {num_samples}, Frequency: {frequency}")
+        print(f"Chrom: {chrom}, Pos: {pos}, Ref: {ref}, Alt: {alt}, Frequency: {frequency}")
 
     conn.commit()
     conn.close()
