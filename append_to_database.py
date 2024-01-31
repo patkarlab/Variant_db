@@ -3,8 +3,8 @@ import sqlite3
 import sys
 import os
 
-def append_to_database(vcf_files):
-    conn = sqlite3.connect('variants.db')
+def append_to_database(db_name, vcf_files):
+    conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
     for vcf_file in vcf_files:
@@ -33,28 +33,28 @@ def append_to_database(vcf_files):
                     else:
                         cursor.execute('INSERT INTO Variants (CHROM, POS, REF, ALT, SAMPLE_NAME, ALT_NUM) VALUES (?, ?, ?, ?, ?, ?);', (chrom, pos, ref, alt, sample_id, alt_num))
 
-    cursor.execute('SELECT CHROM, POS, REF, ALT, SAMPLE_NAME, ALT_NUM FROM Variants;')
-    variants_data = cursor.fetchall()
+#    cursor.execute('SELECT CHROM, POS, REF, ALT, SAMPLE_NAME, ALT_NUM FROM Variants;')
+#   variants_data = cursor.fetchall()
 
-    for variant in variants_data:
-        chrom, pos, ref, alt, sample_id, alt_num = variant
+#    for variant in variants_data:
+#        chrom, pos, ref, alt, sample_id, alt_num = variant
 
         # Calculating frequency
-        num_samples = len(sample_id.split(','))  # Calculate num_samples for each variant
-        frequency = alt_num / (2 * num_samples)
+#        num_samples = len(sample_id.split(','))  # Calculate num_samples for each variant
+#        frequency = alt_num / (2 * num_samples)
 
-        print(f"Chrom: {chrom}, Pos: {pos}, Ref: {ref}, Alt: {alt}, Frequency: {frequency}")
+#        print(f"Chrom: {chrom}, Pos: {pos}, Ref: {ref}, Alt: {alt}, Frequency: {frequency}")
 
     conn.commit()
     conn.close()
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: {} <vcf_file1> <vcf_file2> ...".format(sys.argv[0]))
+    if len(sys.argv) < 3:
+        print("Usage: {} <database_name> <vcf_file1> <vcf_file2> ...".format(sys.argv[0]))
         sys.exit(1)
 
-    vcf_files = sys.argv[1:]
+    db_name = sys.argv[1]
+    vcf_files = sys.argv[2:]
 
-    append_to_database(vcf_files)
-    print("Variants from {} VCF files appended to the 'Variants' table in 'variants.db'".format(len(vcf_files)))
-
+    append_to_database(db_name, vcf_files)
+    print("Variants from {} VCF files appended to the 'Variants' table in '{}'".format(len(vcf_files), db_name))
