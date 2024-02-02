@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import sqlite3
 import sys
 
@@ -37,4 +39,3 @@ if __name__ == "__main__":
 
     db_name = sys.argv[1]
     calculate_frequency_for_variants(db_name)
-
