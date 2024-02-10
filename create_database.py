@@ -20,7 +20,6 @@ def create_database():
             ALT TEXT,
             SAMPLE_NAME TEXT,
             ALT_NUM INTEGER,
-            COMMENTS TEXT,
             PRIMARY KEY (CHROM, POS, REF, ALT)
         );
     ''')
