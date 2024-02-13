@@ -6,30 +6,25 @@ def remove_comment(db_name, chrom, pos, ref, alt, comment_to_remove):
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
-    # Fetch existing comments
     cursor.execute('SELECT COMMENTS FROM Variants WHERE CHROM=? AND POS=? AND REF=? AND ALT=?;', (chrom, pos, ref, alt))
     existing_comments = cursor.fetchone()
 
     if existing_comments is not None and existing_comments[0] is not None:
         existing_comments = existing_comments[0]
-        # Split existing comments into a list
+        
         comments_list = existing_comments.split(', ')
         
         if comment_to_remove.lower() == 'all':
-            # Remove all comments
             comments_list = []
-            print("All comments removed from variant")
+            print("All comments removed from variant") 
         elif comment_to_remove in comments_list:
-            # Remove the specified comment
             comments_list.remove(comment_to_remove)
             print(f"Comment '{comment_to_remove}' removed from variant")
         else:
             print(f"Comment '{comment_to_remove}' not found in variant")
 
-        # Join the comments back into a string, excluding empty elements
         updated_comments = ', '.join(filter(None, comments_list))
 
-        # Update the database with the modified comments
         cursor.execute('UPDATE Variants SET COMMENTS=? WHERE CHROM=? AND POS=? AND REF=? AND ALT=?;', (updated_comments, chrom, pos, ref, alt))
 
     else:
