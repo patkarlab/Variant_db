@@ -2,14 +2,12 @@
 import sqlite3
 
 def find_unique_samples():
-    conn = sqlite3.connect('ALP.db')
+    conn = sqlite3.connect('ICMR_project.db')
     cursor = conn.cursor()
 
-    # Fetch all sample names from the database
     cursor.execute('SELECT SAMPLE_NAME FROM Variants;')
     all_samples = cursor.fetchall()
 
-    # Create a set to store unique samples
     unique_samples_set = set()
 
     # Split samples by commas and add them to the set

@@ -45,7 +45,8 @@ Usage: `./remove_comment.py <db_name> <chrom> <pos> <ref> <alt> <comment_to_remo
 
 # Databases
 
-- Currently there are two databases `ALP.db` and `ICMR_project.db`. 
+- Currently there are three databases `ALP.db`, `ICMR_project.db` and `ALP_ICMR.db`. 
 - `ALP_db_list.txt` contains the list of vcf files appended to the `ALP.db`.
-- `ICMR_db_list.txt` contains the list of vcf files appended to the `ICMR_project.db`.   
+- `ICMR_db_list.txt` contains the list of vcf files appended to the `ICMR_project.db`.
+- `ALP_ICMR.db` contains vcf files from both of these databases.     
 
