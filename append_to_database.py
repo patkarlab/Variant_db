@@ -24,9 +24,10 @@ def append_to_database(db_name, vcf_files):
                     if existing_data:
                         existing_sample_ids, existing_alt_nums = existing_data
                        # print("existing")
-                        if sample_id not in existing_sample_ids:
+                        samples = existing_sample_ids.split(',')
+                        if sample_id not in samples:
                             # Appending new sample ID to the existing ones and counting the number of sample IDs
-                            new_sample_ids = f"{existing_sample_ids},{sample_id}"
+                            new_sample_ids = ",".join(samples + [sample_id])
                             new_alt_nums = existing_alt_nums + alt_num
 
                             cursor.execute('UPDATE Variants SET SAMPLE_NAME = ?, ALT_NUM = ? WHERE CHROM=? AND POS=? AND REF=? AND ALT=?;', (new_sample_ids, new_alt_nums, chrom, pos, ref, alt)) 

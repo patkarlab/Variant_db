@@ -9,6 +9,11 @@ def add_comment(db_name, chrom, pos, ref, alt, comments):
     cursor.execute('SELECT COMMENTS FROM Variants WHERE CHROM=? AND POS=? AND REF=? AND ALT=?;', (chrom, pos, ref, alt))
     existing_comments = cursor.fetchone()
 
+    if existing_comments is None:
+        print("Variant not found.")
+        conn.close()
+        return
+
     if existing_comments[0] is not None:
         old_comment = existing_comments[0]
         comments = f"{old_comment}, {comments}"
